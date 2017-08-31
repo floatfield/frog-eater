@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "immutable": "^3.8.1",
     "inferno": "^3.8.2",
     "inferno-component": "^3.8.2",
-    "inferno-scripts": "4.2.0"
+    "inferno-scripts": "4.2.0",
+    "ramda": "^0.24.1"
   },
   "scripts": {
     "start": "inferno-scripts start",
