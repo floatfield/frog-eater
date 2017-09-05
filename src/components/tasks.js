@@ -1,22 +1,38 @@
+import R from 'ramda';
 import Task from './task';
 
 function Tasks(props) {
-    const yearTasks = props.tasks.filter(isYear).map(mapToTask.bind(null, props.dispatch));
-    const monthTasks = props.tasks.filter(isMonth).map(mapToTask.bind(null, props.dispatch));
+    const tasks = getTasks(props);
     return (
-        <div className="tasks">
-            <div className="year">{ yearTasks }</div>
-            <div className="month">{ monthTasks }</div>
-        </div>
+        <div className="tasks">{ tasks }</div>
     );
 }
 
-function isYear(task) {
-    return task.timeScope === "year";
+function getTasks(props) {
+    return R.compose(
+        R.values,
+        R.mapObjIndexed(mapToScopedTasks.bind(null, props.dispatch)),
+        R.ifElse(
+            () => Boolean(props.model.drag.enabled),
+            R.merge({
+                "year": [],
+                "month": [],
+                "week": [],
+                "day": []
+            }),
+            R.identity
+        ),
+        R.groupBy(R.prop("timeScope"))
+    )(props.model.tasks);
 }
 
-function isMonth(task) {
-    return task.timeScope === "month";
+function mapToScopedTasks(dispatch, group, timeScope) {
+    return (
+        <div className={ timeScope }>
+            <h2 className="time-scope-title">{ timeScope }</h2>
+            { group.map(mapToTask.bind(null, dispatch)) }
+        </div>
+    );
 }
 
 function mapToTask(dispatch, task) {

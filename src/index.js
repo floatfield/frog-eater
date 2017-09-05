@@ -1,6 +1,6 @@
 import { render } from 'inferno';
 import App from './App';
-import './index.css';
+import './css/index.css';
 import handleAction from './model/handleAction';
 import initialConfig from './model/initialConfig';
 import Immutable from 'immutable';

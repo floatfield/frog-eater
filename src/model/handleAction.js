@@ -1,5 +1,8 @@
 import {
-    toggleComplete
+    toggleComplete,
+    dragStart,
+    drag,
+    dragEnd
 } from './actionHandlers';
 
 import {
@@ -7,7 +10,10 @@ import {
 } from './sideEffects';
 
 const actionMap = {
-    "TOGGLE_COMPLETE": [toggleComplete, log]
+    "TOGGLE_COMPLETE": [toggleComplete, log],
+    "DRAG_START": [dragStart, log],
+    "DRAG": [drag, log],
+    "DRAG_END": [dragEnd, log],
 };
 
 function handleAction(currentModel, action, payload) {
